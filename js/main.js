@@ -128,24 +128,21 @@
   modal.addEventListener("click", (e) => { if (e.target === modal) modal.close(); });
 
   /* ---------- Skills ---------- */
-  const levelName = ["", "Beginner", "Familiar", "Proficient", "Advanced", "Expert"];
-  $("#skills-grid").innerHTML = D.skills
-    .map(
-      (g) => `
-    <div class="skill-group reveal">
-      <h3>${esc(g.group)}</h3>
-      ${g.items
-        .map(
-          (s) => `
-        <div class="skill">
-          <div class="skill-head"><span>${esc(s.name)}</span><span>${levelName[s.level] || ""}</span></div>
-          <div class="bar" data-level="${s.level}">${"<i></i>".repeat(5)}</div>
-        </div>`
-        )
-        .join("")}
-    </div>`
-    )
-    .join("");
+  const tagList = (items, cls = "") =>
+    `<ul class="skill-tags ${cls}">${items.map((s) => `<li>${esc(s)}</li>`).join("")}</ul>`;
+  $("#skills-grid").innerHTML = `
+    <div class="skill-block">
+      <h3 class="skill-heading"><span class="pixel">▸</span> Hard Skills</h3>
+      <div class="hard-grid">
+        ${D.skills.hard
+          .map((g) => `<div class="skill-group reveal"><h4>${esc(g.group)}</h4>${tagList(g.items)}</div>`)
+          .join("")}
+      </div>
+    </div>
+    <div class="skill-block">
+      <h3 class="skill-heading"><span class="pixel">▸</span> Soft Skills</h3>
+      <div class="skill-group reveal">${tagList(D.skills.soft, "soft")}</div>
+    </div>`;
 
   /* ---------- Timeline ---------- */
   $("#timeline").innerHTML = D.timeline
@@ -176,11 +173,6 @@
       entries.forEach((en) => {
         if (!en.isIntersecting) return;
         en.target.classList.add("visible");
-        en.target.querySelectorAll(".bar").forEach((bar, bi) => {
-          [...bar.children].forEach((cell, ci) => {
-            if (ci < +bar.dataset.level) setTimeout(() => cell.classList.add("on"), 80 * ci + 40 * bi);
-          });
-        });
         io.unobserve(en.target);
       }),
     { threshold: 0.12 }

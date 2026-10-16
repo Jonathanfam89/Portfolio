@@ -1,28 +1,23 @@
-/* =====================================================================
-   EDIT THIS FILE — all of your portfolio content lives here.
-   You shouldn't need to touch index.html or main.js.
-   ===================================================================== */
 
 const PORTFOLIO = {
-  name: "Your Name",
-  initials: "YN",
+  name: "Jonathan Fam",
+  initials: "JF",
   role: "CS Student · Aspiring Game Programmer",
   tagline:
     "I build gameplay systems, tools, and engines — and I care about the frame budget as much as the fun.",
   resume: "assets/resume.pdf", // drop your PDF in /assets with this name
-  email: "you@example.com",
+  email: "Jonathanfam89@gmail.com",
   lookingFor: "Seeking a Game Programming Internship — Summer 2027",
 
   about: [
-    "I'm a Computer Science undergraduate at <strong>Your University</strong> (expected graduation 2028) focused on gameplay and engine programming.",
-    "I enjoy turning designs into responsive, satisfying mechanics — from character controllers and AI behaviour to rendering and tooling. I've shipped games at jams, built a small C++ engine from scratch, and love profiling code until it hits 60 FPS.",
-    "Outside of code you'll find me speedrunning, sketching level layouts, or playing way too much Hollow Knight.",
+    "I'm a undergraduate at <strong>Singapore institute of Technology & Digipen </strong> currently studying in their joint degree program in Computer Science in Real-Time Interactive Simulation",
+    "",
+    "Outside of code you'll find me playing Riftbound IRL, Grinding Ranks in Deadlock, playing way too much Counter Strike or might find me as a dungeon master by night.",
   ],
 
   stats: [
     { value: "8+", label: "Games built" },
-    { value: "4", label: "Game jams" },
-    { value: "3", label: "Engines used" },
+    { value: "5", label: "Engines used" },
     { value: "C++", label: "Main language" },
   ],
 
@@ -142,48 +137,36 @@ const PORTFOLIO = {
   ],
 
   /* ---------- SKILLS ---------- level: 1–5 */
-  skills: [
-    {
-      group: "Languages",
-      items: [
-        { name: "C++", level: 4 },
-        { name: "C#", level: 4 },
-        { name: "Python", level: 3 },
-        { name: "GLSL / HLSL", level: 3 },
-        { name: "JavaScript", level: 3 },
-      ],
-    },
-    {
-      group: "Engines & Frameworks",
-      items: [
-        { name: "Unity", level: 4 },
-        { name: "Unreal Engine 5", level: 3 },
-        { name: "Godot", level: 3 },
-        { name: "OpenGL", level: 3 },
-        { name: "SDL2", level: 3 },
-      ],
-    },
-    {
-      group: "Game Programming",
-      items: [
-        { name: "Gameplay Systems", level: 4 },
-        { name: "Game AI / Pathfinding", level: 4 },
-        { name: "Physics & Math", level: 3 },
-        { name: "Rendering", level: 3 },
-        { name: "Networking", level: 2 },
-      ],
-    },
-    {
-      group: "Tools",
-      items: [
-        { name: "Git / GitHub", level: 4 },
-        { name: "Visual Studio / Rider", level: 4 },
-        { name: "CMake", level: 3 },
-        { name: "RenderDoc / Profilers", level: 3 },
-        { name: "Perforce", level: 2 },
-      ],
-    },
-  ],
+    skills: {
+    hard: [
+      {
+        group: "Languages",
+        items: ["C++", "C#", "Html", "ASM", "JavaScript"],
+      },
+      {
+        group: "Engines & Frameworks",
+        items: ["Unity", "Unreal Engine 5", "Godot", "OpenGL", "GLSL"],
+      },
+      {
+        group: "Game Programming",
+        items: ["Gameplay Systems", "Game AI & Pathfinding", "Math & Physics", "Rendering & Shaders", "Multiplayer Networking", "Procedural Generation"],
+      },
+      {
+        group: "Tools",
+        items: ["Git / GitHub", "Visual Studio", "CMake", "Blender"],
+      },
+    ],
+    soft: [
+      "Teamwork & Collaboration",
+      "Communication",
+      "Problem Solving",
+      "Adaptability",
+      "Time Management",
+      "Taking Feedback",
+      "Leadership",
+      "Creativity",
+    ],
+  },
 
   /* ---------- EXPERIENCE / EDUCATION ---------- */
   timeline: [
@@ -220,7 +203,6 @@ const PORTFOLIO = {
   socials: [
     { label: "GitHub", url: "https://github.com/yourname", icon: "GitHub" },
     { label: "LinkedIn", url: "https://linkedin.com/in/yourname", icon: "LinkedIn" },
-    { label: "itch.io", url: "https://yourname.itch.io", icon: "itch.io" },
-    { label: "Email", url: "mailto:you@example.com", icon: "Email" },
+    { label: "Email", url: "Jonthanfam89@gmail.com", icon: "Email" },
   ],
 };

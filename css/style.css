@@ -197,15 +197,23 @@ dialog::backdrop { background: rgba(5, 6, 12, 0.8); backdrop-filter: blur(4px); 
 .modal-content li::marker { content: "▸ "; color: var(--accent-2); }
 
 /* ---------- Skills ---------- */
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-.skill-group { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; }
-.skill-group h3 { font-size: 1rem; margin-bottom: 1.2rem; color: var(--accent-3); }
-.skill { margin-bottom: 0.9rem; }
-.skill-head { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 0.35rem; }
-.skill-head span:last-child { font-family: var(--mono); color: var(--muted); font-size: 0.75rem; }
-.bar { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; }
-.bar i { height: 8px; background: var(--line); border-radius: 2px; transition: background 0.4s; }
-.bar i.on { background: var(--accent); box-shadow: 0 0 6px rgba(124, 242, 200, 0.5); }
+.skills-grid { display: flex; flex-direction: column; gap: 2.5rem; }
+.skill-heading { display: flex; align-items: center; gap: 0.7rem; font-size: 1.2rem; margin-bottom: 1rem; }
+.skill-heading .pixel { font-size: 0.7rem; color: var(--accent-2); }
+.hard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.25rem; }
+.skill-group { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.4rem; }
+.skill-group h4 { font-size: 0.95rem; margin-bottom: 1rem; color: var(--accent-3); }
+.skill-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.skill-tags li {
+  font-family: var(--mono); font-size: 0.82rem;
+  padding: 0.35rem 0.75rem; border-radius: 8px;
+  background: rgba(124, 242, 200, 0.08); color: var(--accent);
+  border: 1px solid rgba(124, 242, 200, 0.25);
+  transition: transform 0.15s, border-color 0.15s;
+}
+.skill-tags li:hover { transform: translateY(-2px); border-color: var(--accent); }
+.skill-tags.soft li { background: rgba(255, 111, 181, 0.08); color: var(--accent-2); border-color: rgba(255, 111, 181, 0.3); }
+.skill-tags.soft li:hover { border-color: var(--accent-2); }
 
 /* ---------- Timeline ---------- */
 .timeline { list-style: none; position: relative; padding-left: 2rem; }
