@@ -20,14 +20,14 @@ A fast, dependency-free portfolio site for a Computer Science student applying f
 ├── css/style.css     # all styling — tweak colours in :root
 ├── js/data.js        # ← YOUR CONTENT GOES HERE
 ├── js/main.js        # rendering + hero mini-game
-├── assets/           # résumé PDF, project GIFs/screenshots
+├── assets/           # resume PDF, project GIFs/screenshots
 └── .nojekyll         # tells GitHub Pages to serve files as-is
 ```
 
 ## Customise it
 
 1. Open **`js/data.js`** and replace the placeholder name, bio, projects, skills, timeline and links with your own. The sample projects are examples — delete or rewrite them.
-2. Put your résumé in `assets/resume.pdf`.
+2. Put your resumes in `assets/resume-game.pdf` and `assets/resume-it.pdf`.
 3. Add gameplay GIFs or screenshots to `assets/` and set each project's `image` field, e.g. `image: "assets/echo-drift.gif"`. Recruiters love a 5–10 second gameplay GIF.
 4. (Optional) Change the colour scheme by editing the variables at the top of `css/style.css`.
 

@@ -14,7 +14,6 @@
   $("#hero-role").textContent = D.role;
   $("#footer-name").textContent = D.name;
   $("#year").textContent = new Date().getFullYear();
-  $("#resume-link").href = D.resume;
   $("#contact-email").href = `mailto:${D.email}`;
   $("#contact-blurb").textContent = D.contactBlurb;
 
@@ -41,8 +40,12 @@
 
   /* ---------- Projects ---------- */
   const palette = ["#7cf2c8", "#ff6fb5", "#ffd166", "#8fa8ff", "#c38bff"];
-  const coverHTML = (p, idx) => {
-    if (p.image) return `<div class="cover"><img src="${esc(p.image)}" alt="${esc(p.title)} screenshot" loading="lazy"></div>`;
+  const coverHTML = (p, idx, animate = false) => {
+    // In the modal, show the GIF straight away
+    if (animate && p.gif) return `<div class="cover"><img src="${esc(p.gif)}" alt="${esc(p.title)} gameplay"></div>`;
+    // On cards, the GIF is layered over the still and only loaded/shown on hover
+    const gif = p.gif ? `<img class="hover-gif" data-src="${esc(p.gif)}" alt="" aria-hidden="true">` : "";
+    if (p.image) return `<div class="cover"><img src="${esc(p.image)}" alt="${esc(p.title)} screenshot" loading="lazy">${gif}</div>`;
     // Generated pixel-pattern cover
     const a = palette[idx % palette.length];
     const b = palette[(idx + 2) % palette.length];
@@ -54,69 +57,116 @@
         const r = rnd();
         if (r < 0.22) rects += `<rect x="${x}" y="${y}" width="1" height="1" fill="${r < 0.08 ? b : a}" opacity="${(0.15 + rnd() * 0.5).toFixed(2)}"/>`;
       }
-    return `<div class="cover"><svg class="pattern" viewBox="0 0 16 9" preserveAspectRatio="none" shape-rendering="crispEdges">${rects}</svg><span class="emoji">${p.icon || "🎮"}</span></div>`;
-  };
-
-  const linkHTML = (links = {}) => {
-    const map = { repo: "Code", play: "Play", video: "Video" };
-    return Object.entries(links)
-      .filter(([, url]) => url)
-      .map(([k, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener">${map[k] || k} ↗</a>`)
-      .join("");
+    return `<div class="cover"><svg class="pattern" viewBox="0 0 16 9" preserveAspectRatio="none" shape-rendering="crispEdges">${rects}</svg><span class="emoji">${p.icon || "🎮"}</span>${gif}</div>`;
   };
 
   const grid = $("#project-grid");
   grid.innerHTML = D.projects
     .map(
       (p, i) => `
-    <article class="card reveal" data-idx="${i}" data-tags="${esc(p.tags.join("|"))}" tabindex="0">
+    <article class="card reveal" data-idx="${i}" data-track="${esc(p.track)}" data-tags="${esc(p.tags.join("|"))}" tabindex="0">
       ${coverHTML(p, i)}
       <div class="card-body">
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.summary)}</p>
         <div class="chips">${p.tech.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}</div>
-        <div class="card-links">${linkHTML(p.links)}</div>
       </div>
     </article>`
     )
     .join("");
 
-  /* Filters */
-  const tags = ["All", ...new Set(D.projects.flatMap((p) => p.tags))];
+  /* Hover GIFs: only downloaded the first time a card is hovered/focused */
+  const playGif = (e) => {
+    const gif = e.target.closest(".card")?.querySelector(".hover-gif");
+    if (!gif) return;
+    if (!gif.src) gif.src = gif.dataset.src;
+    gif.classList.add("playing");
+  };
+  const stopGif = (e) => {
+    const card = e.target.closest(".card");
+    if (!card || card.contains(e.relatedTarget)) return;
+    card.querySelector(".hover-gif")?.classList.remove("playing");
+  };
+  grid.addEventListener("pointerover", (e) => {
+    if (!e.target.closest(".card")?.contains(e.relatedTarget)) playGif(e);
+  });
+  grid.addEventListener("pointerout", stopGif);
+  grid.addEventListener("focusin", playGif);
+  grid.addEventListener("focusout", stopGif);
+
+  /* Tracks (Game Dev / IT) + tag filters */
   const filters = $("#filters");
-  filters.innerHTML = tags.map((t, i) => `<button class="filter${i ? "" : " active"}" data-tag="${esc(t)}">${esc(t)}</button>`).join("");
+  const trackSwitch = $("#track-switch");
+  const trackIds = Object.keys(D.tracks);
+  let track = trackIds[0], tag = "All";
+
+  const applyFilters = () => {
+    let shown = 0;
+    grid.querySelectorAll(".card").forEach((c) => {
+      const hide = c.dataset.track !== track || (tag !== "All" && !c.dataset.tags.split("|").includes(tag));
+      c.classList.toggle("hidden", hide);
+      if (!hide) shown++;
+    });
+    $("#project-empty").hidden = shown > 0;
+  };
+
+  const setTrack = (id) => {
+    if (!D.tracks[id]) return;
+    track = id; tag = "All";
+    const t = D.tracks[id];
+    trackSwitch.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", b.dataset.track === id));
+    $("#track-resume").href = t.resume;
+    $("#track-resume").textContent = `Download ${t.label} Resume ↓`;
+    const tags = ["All", ...new Set(D.projects.filter((p) => p.track === id).flatMap((p) => p.tags))];
+    filters.innerHTML = tags.map((t, i) => `<button class="filter${i ? "" : " active"}" data-tag="${esc(t)}">${esc(t)}</button>`).join("");
+    applyFilters();
+    try { localStorage.setItem("track", id); } catch {}
+  };
+
+  trackSwitch.innerHTML = trackIds
+    .map((id) => {
+      const n = D.projects.filter((p) => p.track === id).length;
+      return `<button role="tab" data-track="${id}">${esc(D.tracks[id].label)} <span class="count">${n}</span></button>`;
+    })
+    .join("");
+  trackSwitch.addEventListener("click", (e) => {
+    const btn = e.target.closest("button");
+    if (btn) setTrack(btn.dataset.track);
+  });
   filters.addEventListener("click", (e) => {
     const btn = e.target.closest(".filter");
     if (!btn) return;
     filters.querySelectorAll(".filter").forEach((b) => b.classList.toggle("active", b === btn));
-    const tag = btn.dataset.tag;
-    grid.querySelectorAll(".card").forEach((c) => {
-      c.classList.toggle("hidden", tag !== "All" && !c.dataset.tags.split("|").includes(tag));
-    });
+    tag = btn.dataset.tag;
+    applyFilters();
   });
+
+  // ?track=it in the URL wins (handy for sending recruiters a link), then the last choice
+  let saved = null;
+  try { saved = localStorage.getItem("track"); } catch {}
+  const fromUrl = new URLSearchParams(location.search).get("track");
+  setTrack(D.tracks[fromUrl] ? fromUrl : D.tracks[saved] ? saved : track);
 
   /* Modal */
   const modal = $("#project-modal");
   const openProject = (i) => {
     const p = D.projects[i];
     $("#modal-body").innerHTML = `
-      ${coverHTML(p, i)}
+      ${coverHTML(p, i, true)}
       <div class="modal-content">
         <h3>${esc(p.title)}</h3>
         <div class="meta">
           ${p.role ? `<span>👤 ${esc(p.role)}</span>` : ""}
-          ${p.duration ? `<span>⏱ ${esc(p.duration)}</span>` : ""}
+          ${p.status ? `<span class="status status-${esc(p.status.toLowerCase())}">${p.status.toLowerCase() === "ongoing" ? "● Ongoing" : "✓ Completed"}</span>` : ""}
         </div>
         <p>${esc(p.description)}</p>
         ${p.highlights?.length ? `<h4>What I built</h4><ul>${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : ""}
         <h4>Tech</h4>
         <div class="chips">${p.tech.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}</div>
-        <div class="card-links">${linkHTML(p.links)}</div>
       </div>`;
     modal.showModal();
   };
   grid.addEventListener("click", (e) => {
-    if (e.target.closest("a")) return;
     const card = e.target.closest(".card");
     if (card) openProject(+card.dataset.idx);
   });

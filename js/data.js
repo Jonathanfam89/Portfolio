@@ -4,15 +4,20 @@ const PORTFOLIO = {
   initials: "JF",
   role: "CS Student · Aspiring Game Programmer",
   tagline:
-    "I build gameplay systems, tools, and engines — and I care about the frame budget as much as the fun.",
-  resume: "assets/resume.pdf", // drop your PDF in /assets with this name
+    "I build gameplay systems, tools, and engines ",
+  /* Project tracks: visitors switch between these above the projects.
+     Each has its own resume — drop the PDFs in /assets with these names. */
+  tracks: {
+    game: { label: "Game Dev", resume: "assets/resume-game.pdf" },
+    it: { label: "IT", resume: "assets/resume-it.pdf" },
+  },
   email: "Jonathanfam89@gmail.com",
   lookingFor: "Seeking a Game Programming Internship — Summer 2027",
 
   about: [
     "I'm a undergraduate at <strong>Singapore institute of Technology & Digipen </strong> currently studying in their joint degree program in Computer Science in Real-Time Interactive Simulation",
-    "",
-    "Outside of code you'll find me playing Riftbound IRL, Grinding Ranks in Deadlock, playing way too much Counter Strike or might find me as a dungeon master by night.",
+    "Been ",
+    "Outside of code you'll find me playing Riftbound IRL, Grinding Ranks in Deadlock, Might find me Slaying Dragons in D&D by night.",
   ],
 
   stats: [
@@ -22,12 +27,16 @@ const PORTFOLIO = {
   ],
 
   /* ---------- PROJECTS ----------
-     tags: used for filter buttons.  links: any of repo / play / video.
-     image: optional path like "assets/project1.gif" (a GIF of gameplay is ideal).
+     track: "game" or "it" — which tab the project appears under.
+     status: "completed" or "ongoing" (leave "" to hide it).
+     tags: used for filter buttons.
+     image: optional still, e.g. "assets/echo-drift.png" (shown by default).
+     gif:   optional gameplay GIF, e.g. "assets/echo-drift.gif" (plays on hover).
      If no image is set, a generated cover is shown instead.            */
   projects: [
     {
-      title: "Echo Drift",
+      title: "Out of Time ",
+      track: "game",
       icon: "🚀",
       summary: "Momentum-based 2D space shooter with a custom physics step and wave-based enemy AI.",
       description:
@@ -40,48 +49,52 @@ const PORTFOLIO = {
       tech: ["Unity", "C#", "ScriptableObjects"],
       tags: ["Unity", "Gameplay", "AI"],
       role: "Solo developer",
-      duration: "6 weeks",
+      status: "ongoing",
       image: "",
-      links: { repo: "https://github.com/yourname/echo-drift", play: "https://yourname.itch.io/echo-drift" },
+      gif: "",
     },
     {
-      title: "Ember Engine",
+      title: "Mouchine Engine",
+      track: "game",
       icon: "⚙️",
-      summary: "A small C++/OpenGL game engine with an ECS, batch renderer, and hot-reloadable scenes.",
+      summary: "A C++/OpenGL game engine with a component engine",
       description:
-        "Learning project to understand what happens beneath commercial engines. Features an archetype-based Entity Component System, a 2D batch renderer that draws 10k+ sprites per frame, an input/event system, and an ImGui-based editor with scene serialisation to JSON.",
+        "Made a Game engine from scratch with c++, cmake and opengl.",
       highlights: [
-        "Archetype ECS with cache-friendly component storage",
-        "Batch renderer: 10,000+ sprites at 60 FPS",
-        "ImGui editor with JSON scene save/load and hot reload",
+        "Archetype component with factory and blueprint concept with friendly component storage",
+        "Script-able with C++ and C#",
+        "Replay system with VS ghost elements",
+        "ImGui editor",
       ],
-      tech: ["C++17", "OpenGL", "GLFW", "ImGui", "CMake"],
+      tech: ["C++", "C#", "OpenGL", "ImGui", "CMake","Mono",],
       tags: ["C++", "Engine", "Graphics"],
-      role: "Solo developer",
-      duration: "Ongoing",
-      image: "",
-      links: { repo: "https://github.com/yourname/ember-engine" },
+      role: "Tech Lead",
+      status: "completed",
+      image: "assets/MBTW_Pic.png",
+      gif: "",
     },
     {
-      title: "Hollow Lantern",
-      icon: "🏮",
-      summary: "48-hour game jam puzzle-platformer where light reveals hidden platforms.",
+      title: "KermitDaFrog",
+      track: "game",
+      icon: "🐸",
+      summary: "A fast-paced vertical side-scrolling frog shooting game.",
       description:
-        "Made with a team of 4 for Global Game Jam. I was the lead programmer: I built the player controller (coyote time, jump buffering, variable jump height), the light-reveal shader mechanic, and the level loading pipeline.",
+        "Made with a team of 6 to create game with A game engine given by the SIT/Digipen.i was a programmer who built the OOP enemies and worked on the gamelay elements helping others along the way",
       highlights: [
-        "Platformer feel: coyote time, jump buffer, variable jump",
+        "endless : coyote time, jump buffer, variable jump",
         "Custom shader to reveal geometry within light radius",
         "Placed top 10% in 'Innovation' category",
       ],
-      tech: ["Godot", "GDScript", "GLSL"],
+      tech: ["C++"],
       tags: ["Godot", "Gameplay", "Game Jam", "Graphics"],
       role: "Lead programmer (team of 4)",
-      duration: "48 hours",
+      status: "",
       image: "",
-      links: { repo: "https://github.com/yourname/hollow-lantern", play: "https://yourname.itch.io/hollow-lantern" },
+      gif: "",
     },
     {
       title: "Dungeon Weaver",
+      track: "game",
       icon: "🗝️",
       summary: "Procedural dungeon generator using BSP partitioning and A* pathfinding for enemies.",
       description:
@@ -94,12 +107,13 @@ const PORTFOLIO = {
       tech: ["Unreal Engine 5", "C++", "Blueprints"],
       tags: ["Unreal", "C++", "AI", "Procedural"],
       role: "Solo developer",
-      duration: "2 months",
+      status: "completed",
       image: "",
-      links: { repo: "https://github.com/yourname/dungeon-weaver", video: "https://youtube.com/" },
+      gif: "",
     },
     {
       title: "Netcode Pong",
+      track: "game",
       icon: "🏓",
       summary: "Online multiplayer Pong with client-side prediction and server reconciliation.",
       description:
@@ -112,12 +126,13 @@ const PORTFOLIO = {
       tech: ["C++", "ENet", "SDL2"],
       tags: ["C++", "Networking"],
       role: "Solo developer",
-      duration: "3 weeks",
+      status: "completed",
       image: "",
-      links: { repo: "https://github.com/yourname/netcode-pong" },
+      gif: "",
     },
     {
       title: "Ray Tracer in a Weekend",
+      track: "game",
       icon: "💡",
       summary: "CPU path tracer with BVH acceleration and multithreaded rendering.",
       description:
@@ -130,9 +145,40 @@ const PORTFOLIO = {
       tech: ["C++", "Multithreading"],
       tags: ["C++", "Graphics"],
       role: "Solo developer",
-      duration: "4 weeks",
+      status: "completed",
       image: "",
-      links: { repo: "https://github.com/yourname/raytracer" },
+      gif: "",
+    },
+    /* ----- IT projects (examples — replace with your own) ----- */
+    {
+      title: "Example IT Project",
+      track: "it",
+      icon: "🖥️",
+      summary: "Replace this with an IT project — e.g. a web app, network setup, or automation script.",
+      description:
+        "Describe what the project does, the problem it solved, and the part you built.",
+      highlights: ["What you built", "A measurable result", "Something you learned"],
+      tech: ["Python", "SQL"],
+      tags: ["Web", "Database"],
+      role: "Solo developer",
+      status: "completed",
+      image: "",
+      gif: "",
+    },
+    {
+      title: "Example IT Project 2",
+      track: "it",
+      icon: "🌐",
+      summary: "Another IT project placeholder — duplicate this block for each project.",
+      description:
+        "Describe what the project does, the problem it solved, and the part you built.",
+      highlights: ["What you built", "A measurable result"],
+      tech: ["JavaScript", "Node.js"],
+      tags: ["Web", "Automation"],
+      role: "Team of 3",
+      status: "completed",
+      image: "",
+      gif: "",
     },
   ],
 
@@ -172,27 +218,27 @@ const PORTFOLIO = {
   timeline: [
     {
       when: "2024 — Present",
-      title: "B.Sc. Computer Science",
-      org: "Your University",
-      details: "Specialisation in Game Development. Relevant modules: Data Structures & Algorithms, Computer Graphics, Linear Algebra, Operating Systems, AI. GPA 3.8 / 4.0.",
+      title: "B.Sc. Computer Science in Real-Time Interactive Simulation",
+      org: "Singapore Institute of Technology",
+      details: "Specialization in Game Development. Relevant modules: Data Structures & Algorithms, Computer Graphics, Calculus, Operating Systems, AI.",
+    },
+        {
+      when: "March 2021 - August 2021",
+      title: "Software Engineering Intern",
+      org: "Cxrus Solutions Pte Ltd",
+      details: "providing it 405solution to clients by designing websites with Angular for the frontend and for the backend built and test functions AWS systems ",
     },
     {
-      when: "2025 — Present",
-      title: "Programming Lead",
-      org: "University Game Dev Club",
-      details: "Run weekly C++/Unity workshops for 40+ members and organise an internal game jam each semester.",
+      when: "Apr 2019 — March 2022",
+      title: "Student",
+      org: "Singapore",
+      details: "Did general IT of Full Stack Development with HTML, CSS, Javascript and , ",
     },
     {
       when: "Jan 2026",
       title: "Participant — Global Game Jam",
       org: "Hollow Lantern",
       details: "Lead programmer on a 4-person team; placed top 10% in Innovation.",
-    },
-    {
-      when: "Summer 2025",
-      title: "Software Engineering Intern",
-      org: "Example Company",
-      details: "Built internal Python tooling that cut asset processing time by 30%. (Replace with your own experience, or delete this entry.)",
     },
   ],
 
