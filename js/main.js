@@ -9,12 +9,12 @@
 
   /* ---------- Basic fields ---------- */
   document.title = `${D.name} | Game Programmer Portfolio`;
-  $("#nav-logo").textContent = `<${D.initials}/>`;
+  $("#nav-logo").textContent = D.initials;
   $("#hero-name").textContent = D.name;
   $("#hero-role").textContent = D.role;
   $("#footer-name").textContent = D.name;
   $("#year").textContent = new Date().getFullYear();
-  $("#contact-email").href = `mailto:${D.email}`;
+  $("#contact-email").textContent = D.email;
   $("#contact-blurb").textContent = D.contactBlurb;
 
   /* Typewriter tagline */
@@ -34,15 +34,21 @@
   $("#about-text").innerHTML =
     D.about.map((p) => `<p>${p}</p>`).join("") +
     (D.lookingFor ? `<span class="looking">${esc(D.lookingFor)}</span>` : "");
+  $("#about-photo").innerHTML = D.photo
+    ? `<img src="${esc(D.photo)}" alt="Photo of ${esc(D.name)}">`
+    : `<div class="portrait-placeholder">
+        <svg viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">
+          <path fill="currentColor" d="M4 1h4v1H4zM3 2h6v4H3zM4 6h4v1H4zM2 8h8v1H2zM1 9h10v3H1z"/>
+        </svg>
+        <span class="mono">Your photo here</span>
+      </div>`;
   $("#about-stats").innerHTML = D.stats
     .map((s) => `<li><span class="v">${esc(s.value)}</span><span class="l">${esc(s.label)}</span></li>`)
     .join("");
 
   /* ---------- Projects ---------- */
-  const palette = ["#7cf2c8", "#ff6fb5", "#ffd166", "#8fa8ff", "#c38bff"];
-  const coverHTML = (p, idx, animate = false) => {
-    // In the modal, show the GIF straight away
-    if (animate && p.gif) return `<div class="cover"><img src="${esc(p.gif)}" alt="${esc(p.title)} gameplay"></div>`;
+  const palette = ["#41a1cf", "#0081c0", "#7fc4e6", "#dee2de", "#b4b8b4"];
+  const coverHTML = (p, idx) => {
     // On cards, the GIF is layered over the still and only loaded/shown on hover
     const gif = p.gif ? `<img class="hover-gif" data-src="${esc(p.gif)}" alt="" aria-hidden="true">` : "";
     if (p.image) return `<div class="cover"><img src="${esc(p.image)}" alt="${esc(p.title)} screenshot" loading="lazy">${gif}</div>`;
@@ -117,7 +123,7 @@
     trackSwitch.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", b.dataset.track === id));
     $("#track-resume").href = t.resume;
     $("#track-resume").textContent = `Download ${t.label} Resume ↓`;
-    const tags = ["All", ...new Set(D.projects.filter((p) => p.track === id).flatMap((p) => p.tags))];
+    const tags = ["All", ...new Set(D.projects.filter((p) => p.track === id).flatMap((p) => p.tags).filter(Boolean))];
     filters.innerHTML = tags.map((t, i) => `<button class="filter${i ? "" : " active"}" data-tag="${esc(t)}">${esc(t)}</button>`).join("");
     applyFilters();
     try { localStorage.setItem("track", id); } catch {}
@@ -147,12 +153,84 @@
   const fromUrl = new URLSearchParams(location.search).get("track");
   setTrack(D.tracks[fromUrl] ? fromUrl : D.tracks[saved] ? saved : track);
 
+  /* Modal media carousel: media + image + gif, deduped, videos first */
+  const isYouTube = (src) => /youtu\.?be/.test(src);
+  const isVideo = (src) => isYouTube(src) || /\.(mp4|webm|mov|ogg)$/i.test(src);
+  const youTubeEmbed = (src) => {
+    const id = src.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/)?.[1];
+    return id ? `https://www.youtube-nocookie.com/embed/${id}?enablejsapi=1` : src;
+  };
+  const projectMedia = (p) => {
+    const all = [...new Set([...(p.media || []), p.image, p.gif].filter(Boolean))];
+    return [...all.filter(isVideo), ...all.filter((s) => !isVideo(s))];
+  };
+  const slideHTML = (src, p) => {
+    if (isYouTube(src))
+      return `<iframe src="${esc(youTubeEmbed(src))}" title="${esc(p.title)} video" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+    if (isVideo(src)) return `<video src="${esc(src)}" controls playsinline preload="metadata"></video>`;
+    return `<img src="${esc(src)}" alt="${esc(p.title)} screenshot">`;
+  };
+  const carouselHTML = (p, i) => {
+    const media = projectMedia(p);
+    if (!media.length) return coverHTML(p, i);
+    const many = media.length > 1;
+    return `
+      <div class="carousel" data-index="0">
+        <div class="carousel-track">${media.map((m) => `<div class="slide">${slideHTML(m, p)}</div>`).join("")}</div>
+        ${many ? `
+        <button class="carousel-btn prev" aria-label="Previous">‹</button>
+        <button class="carousel-btn next" aria-label="Next">›</button>
+        <div class="carousel-dots">${media.map((_, n) => `<button aria-label="Show item ${n + 1}"${n ? "" : ' aria-current="true"'}></button>`).join("")}</div>` : ""}
+      </div>`;
+  };
+  const stopMedia = (root) => {
+    root.querySelectorAll("video").forEach((v) => v.pause());
+    root.querySelectorAll("iframe").forEach((f) =>
+      f.contentWindow?.postMessage('{"event":"command","func":"pauseVideo","args":""}', "*"));
+  };
+  const goTo = (car, n) => {
+    const count = car.querySelectorAll(".slide").length;
+    n = (n + count) % count;
+    stopMedia(car);
+    car.dataset.index = n;
+    car.querySelector(".carousel-track").style.transform = `translateX(-${n * 100}%)`;
+    car.querySelectorAll(".carousel-dots button").forEach((d, k) => d.toggleAttribute("aria-current", k === n));
+  };
+
   /* Modal */
   const modal = $("#project-modal");
+  const modalBody = $("#modal-body");
+  modalBody.addEventListener("click", (e) => {
+    const car = e.target.closest(".carousel");
+    if (!car) return;
+    const idx = +car.dataset.index;
+    if (e.target.closest(".prev")) goTo(car, idx - 1);
+    else if (e.target.closest(".next")) goTo(car, idx + 1);
+    else if (e.target.closest(".carousel-dots button"))
+      goTo(car, [...car.querySelectorAll(".carousel-dots button")].indexOf(e.target.closest("button")));
+  });
+  modal.addEventListener("keydown", (e) => {
+    const car = modalBody.querySelector(".carousel");
+    if (!car || !car.querySelector(".prev") || e.target.closest("video")) return;
+    if (e.key === "ArrowLeft") goTo(car, +car.dataset.index - 1);
+    if (e.key === "ArrowRight") goTo(car, +car.dataset.index + 1);
+  });
+  // Swipe on touch screens
+  let swipeX = null;
+  modalBody.addEventListener("touchstart", (e) => { if (e.target.closest(".carousel")) swipeX = e.touches[0].clientX; }, { passive: true });
+  modalBody.addEventListener("touchend", (e) => {
+    const car = modalBody.querySelector(".carousel");
+    if (swipeX === null || !car?.querySelector(".prev")) return;
+    const dx = e.changedTouches[0].clientX - swipeX;
+    swipeX = null;
+    if (Math.abs(dx) > 50) goTo(car, +car.dataset.index + (dx < 0 ? 1 : -1));
+  });
+  modal.addEventListener("close", () => stopMedia(modalBody));
+
   const openProject = (i) => {
     const p = D.projects[i];
-    $("#modal-body").innerHTML = `
-      ${coverHTML(p, i, true)}
+    modalBody.innerHTML = `
+      ${carouselHTML(p, i)}
       <div class="modal-content">
         <h3>${esc(p.title)}</h3>
         <div class="meta">
@@ -212,6 +290,20 @@
     .map((s) => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.label)}">${esc(s.icon)}</a></li>`)
     .join("");
 
+  /* ---------- Copy email ---------- */
+  const copyBtn = $("#copy-email");
+  copyBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(D.email);
+      copyBtn.textContent = "✓ Copied!";
+    } catch {
+      // Clipboard blocked (e.g. opened as a local file): select the text so it can be copied manually
+      getSelection().selectAllChildren($("#contact-email"));
+      copyBtn.textContent = "Press Ctrl+C";
+    }
+    setTimeout(() => (copyBtn.textContent = "Copy"), 2000);
+  });
+
   /* ---------- Nav toggle ---------- */
   const links = $("#nav-links");
   $("#nav-toggle").addEventListener("click", () => links.classList.toggle("open"));
@@ -237,17 +329,41 @@
   const ctx = canvas.getContext("2d");
   const hero = $(".hero");
   const scoreEl = $("#score");
-  let W, H, dpr;
+  let W, H, dpr, sky;
   const stars = [], bullets = [], rocks = [], sparks = [];
+  let skyline = [];
   const ship = { x: 0, y: 0, tx: 0, ty: 0, angle: -Math.PI / 2 };
   let score = 0, last = performance.now(), spawnT = 0, running = true;
+
+  // Pixel-art city skyline along the bottom edge (the one "game-art" element in the scene)
+  const PX = 6;
+  const buildSkyline = () => {
+    skyline = [];
+    let x = 0;
+    while (x < W) {
+      const w = (4 + ((Math.random() * 8) | 0)) * PX;
+      const h = (8 + ((Math.random() * 22) | 0)) * PX;
+      const windows = [];
+      for (let wy = 2 * PX; wy < h - PX; wy += 3 * PX)
+        for (let wx = PX; wx < w - PX; wx += 2 * PX)
+          if (Math.random() < 0.22) windows.push([wx, wy]);
+      skyline.push({ x, w, h, windows });
+      x += w + ((Math.random() * 2) | 0) * PX;
+    }
+  };
 
   const resize = () => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = hero.clientWidth; H = hero.clientHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    if (!ship.x) { ship.x = ship.tx = W / 2; ship.y = ship.ty = H * 0.8; }
+    // Moonlit night: deep dusk at the top fading to a cool blue horizon
+    sky = ctx.createLinearGradient(0, 0, 0, H);
+    sky.addColorStop(0, "#1f1f29");
+    sky.addColorStop(0.55, "#22304a");
+    sky.addColorStop(1, "#3c6a8c");
+    buildSkyline();
+    if (!ship.x) { ship.x = ship.tx = W / 2; ship.y = ship.ty = H * 0.55; }
   };
   resize();
   addEventListener("resize", resize);
@@ -297,17 +413,35 @@
     const dt = Math.min((now - last) / 16.67, 3); // normalised to 60fps
     last = now;
 
-    ctx.fillStyle = "#0b0d17";
+    ctx.fillStyle = sky;
     ctx.fillRect(0, 0, W, H);
+
+    // Moon with a soft halo
+    const mx = W * 0.8, my = H * 0.2, mr = Math.max(28, Math.min(W, H) * 0.05);
+    const halo = ctx.createRadialGradient(mx, my, mr * 0.5, mx, my, mr * 5);
+    halo.addColorStop(0, "rgba(255, 244, 214, 0.28)");
+    halo.addColorStop(1, "rgba(255, 244, 214, 0)");
+    ctx.fillStyle = halo;
+    ctx.fillRect(mx - mr * 5, my - mr * 5, mr * 10, mr * 10);
+    ctx.fillStyle = "#fbf3dc";
+    ctx.beginPath(); ctx.arc(mx, my, mr, 0, Math.PI * 2); ctx.fill();
 
     // Stars (parallax, scroll downward)
     for (const s of stars) {
       s.y += 0.0009 * s.z * dt;
       if (s.y > 1) { s.y = 0; s.x = Math.random(); }
       const px = s.x * W + (ship.x - W / 2) * -0.03 * s.z;
-      ctx.fillStyle = `rgba(230,232,245,${0.25 + s.z * 0.6})`;
+      ctx.fillStyle = `rgba(254,255,252,${0.2 + s.z * 0.6})`;
       const size = s.z > 0.8 ? 2 : 1;
       ctx.fillRect(px, s.y * H, size, size);
+    }
+
+    // Pixel skyline with lit windows
+    for (const b of skyline) {
+      ctx.fillStyle = "#171a26";
+      ctx.fillRect(b.x, H - b.h, b.w, b.h);
+      ctx.fillStyle = "#f3d98b";
+      for (const [wx, wy] of b.windows) ctx.fillRect(b.x + wx, H - b.h + wy, PX, PX);
     }
 
     // Ship movement (eased) + facing
@@ -325,7 +459,7 @@
     if (spawnT <= 0 && rocks.length < 10) { spawnRock(); spawnT = 50 + Math.random() * 60; }
 
     // Bullets
-    ctx.fillStyle = "#ffd166";
+    ctx.fillStyle = "#f3d98b";
     for (let i = bullets.length - 1; i >= 0; i--) {
       const b = bullets[i];
       b.x += b.vx * dt; b.y += b.vy * dt; b.life -= dt;
@@ -334,7 +468,7 @@
     }
 
     // Rocks + collisions
-    ctx.strokeStyle = "#8fa8ff"; ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "#b4b8b4"; ctx.lineWidth = 1.5;
     for (let i = rocks.length - 1; i >= 0; i--) {
       const r = rocks[i];
       r.x += r.vx * dt; r.y += r.vy * dt; r.rot += r.vr * dt;
@@ -345,7 +479,7 @@
         if ((b.x - r.x) ** 2 + (b.y - r.y) ** 2 < r.r * r.r) { bullets.splice(j, 1); hit = true; break; }
       }
       if (hit) {
-        burst(r.x, r.y, "#ff6fb5");
+        burst(r.x, r.y, "#7fc4e6");
         score += Math.round(40 - r.r);
         scoreEl.textContent = `SCORE ${score}`;
         rocks.splice(i, 1);
@@ -373,11 +507,11 @@
     // Ship
     ctx.save();
     ctx.translate(ship.x, ship.y); ctx.rotate(ship.angle);
-    ctx.strokeStyle = "#7cf2c8"; ctx.lineWidth = 2;
-    ctx.shadowColor = "#7cf2c8"; ctx.shadowBlur = 12;
+    ctx.strokeStyle = "#fefffc"; ctx.lineWidth = 2;
+    ctx.shadowColor = "#41a1cf"; ctx.shadowBlur = 12;
     ctx.beginPath(); ctx.moveTo(14, 0); ctx.lineTo(-10, -9); ctx.lineTo(-5, 0); ctx.lineTo(-10, 9); ctx.closePath(); ctx.stroke();
     // thruster flicker
-    ctx.strokeStyle = "#ff6fb5"; ctx.shadowColor = "#ff6fb5";
+    ctx.strokeStyle = "#41a1cf"; ctx.shadowColor = "#41a1cf";
     ctx.beginPath(); ctx.moveTo(-7, -3); ctx.lineTo(-12 - Math.random() * 6, 0); ctx.lineTo(-7, 3); ctx.stroke();
     ctx.restore();
 

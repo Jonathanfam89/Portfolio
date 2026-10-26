@@ -2,28 +2,31 @@
 const PORTFOLIO = {
   name: "Jonathan Fam",
   initials: "JF",
-  role: "CS Student · Aspiring Game Programmer",
+  role: "CS Student · Game Programmer/Designer",
   tagline:
-    "I build gameplay systems, tools, and engines ",
+    "I build gameplay systems, tools, and engines",
   /* Project tracks: visitors switch between these above the projects.
      Each has its own resume — drop the PDFs in /assets with these names. */
   tracks: {
     game: { label: "Game Dev", resume: "assets/resume-game.pdf" },
     it: { label: "IT", resume: "assets/resume-it.pdf" },
   },
+  /* Your photo for "fig. 1" in the About section, e.g. "assets/me.jpg".
+     Leave "" to show the placeholder. A square-ish or 4:3 photo works best. */
+  photo: "assets/Portrait.jpg",
   email: "Jonathanfam89@gmail.com",
   lookingFor: "Seeking a Game Programming Internship — Summer 2027",
 
   about: [
     "I'm a undergraduate at <strong>Singapore institute of Technology & Digipen </strong> currently studying in their joint degree program in Computer Science in Real-Time Interactive Simulation",
-    "Been ",
+    "Been in love with games all my life since i was 7, since then i have been dreaming of making a successful game franchise.",
     "Outside of code you'll find me playing Riftbound IRL, Grinding Ranks in Deadlock, Might find me Slaying Dragons in D&D by night.",
   ],
 
   stats: [
     { value: "8+", label: "Games built" },
     { value: "5", label: "Engines used" },
-    { value: "C++", label: "Main language" },
+    { value: "C++", label: "Main language" }
   ],
 
   /* ---------- PROJECTS ----------
@@ -32,6 +35,9 @@ const PORTFOLIO = {
      tags: used for filter buttons.
      image: optional still, e.g. "assets/echo-drift.png" (shown by default).
      gif:   optional gameplay GIF, e.g. "assets/echo-drift.gif" (plays on hover).
+     media: extra pics/videos for the pop-up carousel, e.g.
+            ["assets/trailer.mp4", "https://youtu.be/VIDEO_ID", "assets/shot2.png"].
+            Videos always come first; image and gif are added automatically.
      If no image is set, a generated cover is shown instead.            */
   projects: [
     {
@@ -52,6 +58,7 @@ const PORTFOLIO = {
       status: "ongoing",
       image: "",
       gif: "",
+      media: [],
     },
     {
       title: "Mouchine Engine",
@@ -72,31 +79,33 @@ const PORTFOLIO = {
       status: "completed",
       image: "assets/MBTW_Pic.png",
       gif: "",
+      media: [],
     },
     {
-      title: "KermitDaFrog",
+      title: "Kroak'N Load",
       track: "game",
       icon: "🐸",
       summary: "A fast-paced vertical side-scrolling frog shooting game.",
       description:
-        "Made with a team of 6 to create game with A game engine given by the SIT/Digipen.i was a programmer who built the OOP enemies and worked on the gamelay elements helping others along the way",
+        "Made with a team of 6 to create game with A game engine given by the SIT/Digipen. i was a programmer who built the OOP enemies and worked on the gamelay elements helping others along the way",
       highlights: [
-        "endless : coyote time, jump buffer, variable jump",
+        "Endless Waves of Enemies  : coyote time, jump buffer, variable jump",
         "Custom shader to reveal geometry within light radius",
         "Placed top 10% in 'Innovation' category",
       ],
       tech: ["C++"],
-      tags: ["Godot", "Gameplay", "Game Jam", "Graphics"],
-      role: "Lead programmer (team of 4)",
-      status: "",
-      image: "",
+      tags: [ "Gameplay","OOP",""],
+      role: "Programmer",
+      status: "Completed",
+      image: "assets/TKDF_Pic.png",
       gif: "",
+      media: ["assets/KermitDaFrog_Trailer.mp4"],
     },
     {
-      title: "Dungeon Weaver",
+      title: "CatNapped",
       track: "game",
-      icon: "🗝️",
-      summary: "Procedural dungeon generator using BSP partitioning and A* pathfinding for enemies.",
+      icon: "",
+      summary: "",
       description:
         "A roguelike prototype in Unreal Engine 5. Rooms are generated with binary space partitioning, corridors are connected with a minimum spanning tree, and enemies navigate using a grid-based A* that I implemented in C++ rather than the built-in NavMesh to learn the algorithm.",
       highlights: [
@@ -104,50 +113,13 @@ const PORTFOLIO = {
         "Custom A* pathfinding in C++ with a binary heap",
         "Blueprint-exposed parameters so designers can tune generation",
       ],
-      tech: ["Unreal Engine 5", "C++", "Blueprints"],
-      tags: ["Unreal", "C++", "AI", "Procedural"],
-      role: "Solo developer",
+      tech: ["C++", "Physics","Gameplay"],
+      tags: ["Physics", "C++"],
+      role: "Programmer",
       status: "completed",
-      image: "",
+      image: "assets/Catnapped_Front.png",
       gif: "",
-    },
-    {
-      title: "Netcode Pong",
-      track: "game",
-      icon: "🏓",
-      summary: "Online multiplayer Pong with client-side prediction and server reconciliation.",
-      description:
-        "Built to learn multiplayer fundamentals. An authoritative server written in C++ with ENet; clients use input prediction and reconciliation so play feels responsive even at 150 ms of simulated latency.",
-      highlights: [
-        "Authoritative server with fixed tick rate",
-        "Client prediction + server reconciliation",
-        "Tested with artificial latency and packet loss",
-      ],
-      tech: ["C++", "ENet", "SDL2"],
-      tags: ["C++", "Networking"],
-      role: "Solo developer",
-      status: "completed",
-      image: "",
-      gif: "",
-    },
-    {
-      title: "Ray Tracer in a Weekend",
-      track: "game",
-      icon: "💡",
-      summary: "CPU path tracer with BVH acceleration and multithreaded rendering.",
-      description:
-        "Followed and extended Peter Shirley's 'Ray Tracing in One Weekend' series. Added a bounding volume hierarchy, multithreaded tile rendering, and OBJ mesh loading — cutting render time of the final scene by ~12×.",
-      highlights: [
-        "BVH acceleration structure",
-        "Multithreaded tile renderer (std::thread)",
-        "~12× speed-up over naive implementation",
-      ],
-      tech: ["C++", "Multithreading"],
-      tags: ["C++", "Graphics"],
-      role: "Solo developer",
-      status: "completed",
-      image: "",
-      gif: "",
+      media: ["assets/ByteSized_Trailer.mp4","assets/Cat_Swing.gif","assets/Cat_Pic.png","assets/Cat_Pic_page3"],
     },
     /* ----- IT projects (examples — replace with your own) ----- */
     {
@@ -164,6 +136,7 @@ const PORTFOLIO = {
       status: "completed",
       image: "",
       gif: "",
+      media: [],
     },
     {
       title: "Example IT Project 2",
@@ -179,6 +152,7 @@ const PORTFOLIO = {
       status: "completed",
       image: "",
       gif: "",
+      media: [],
     },
   ],
 
@@ -218,37 +192,35 @@ const PORTFOLIO = {
   timeline: [
     {
       when: "2024 — Present",
-      title: "B.Sc. Computer Science in Real-Time Interactive Simulation",
+      title: "B.Sc. Computer Science in Real-Time Interactive Simulation Student",
       org: "Singapore Institute of Technology",
-      details: "Specialization in Game Development. Relevant modules: Data Structures & Algorithms, Computer Graphics, Calculus, Operating Systems, AI.",
+      details: "Specialization in Game Development. Did modules of Data Structures & Algorithms, Computer Graphics, Calculus, Operating Systems, AI.",
     },
         {
       when: "March 2021 - August 2021",
       title: "Software Engineering Intern",
       org: "Cxrus Solutions Pte Ltd",
-      details: "providing it 405solution to clients by designing websites with Angular for the frontend and for the backend built and test functions AWS systems ",
+      details: "Providing it solution to clients by designing websites with Angular for the frontend and for the backend built and test functions AWS systems ",
     },
     {
       when: "Apr 2019 — March 2022",
-      title: "Student",
-      org: "Singapore",
-      details: "Did general IT of Full Stack Development with HTML, CSS, Javascript and , ",
+      title: "Diploma In Information Technology Student",
+      org: "Singapore Polytechinc ",
+      details: "General IT full stack development with HTML, CSS, javascript and Went into specialization for immersive technology where i did AR and VR game develop projects with business mod of human resources, enterprise innovation and finance   ",
     },
     {
-      when: "Jan 2026",
-      title: "Participant — Global Game Jam",
-      org: "Hollow Lantern",
-      details: "Lead programmer on a 4-person team; placed top 10% in Innovation.",
+      when: "Jan 2017 - May 2019",
+      title: "Higher NITEC in Business Information Technology Student",
+      org: "Institute of Technology College East  ",
+      details: "Learn the Technical hands on side of technology from computer networking, computer hardware to business elements of accounting and entrepreneurship   ",
     },
   ],
 
   contactBlurb:
-    "I'm currently looking for a game programming internship. If you're hiring, want to collaborate on a jam, or just want to talk games — my inbox is open.",
+    "I'm currently looking for a game programming internship. If you're hiring or just want to talk games — my inbox is open.",
 
   /* label shows on hover; icon is the text/emoji shown */
   socials: [
-    { label: "GitHub", url: "https://github.com/yourname", icon: "GitHub" },
-    { label: "LinkedIn", url: "https://linkedin.com/in/yourname", icon: "LinkedIn" },
-    { label: "Email", url: "Jonthanfam89@gmail.com", icon: "Email" },
-  ],
+    { label: "GitHub", url: "https://github.com/jonathanfam89", icon: "GitHub" },
+    { label: "LinkedIn", url: "https://linkedin.com/in/jonathan-fam", icon: "LinkedIn" },  ],
 };

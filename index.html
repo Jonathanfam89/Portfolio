@@ -9,86 +9,142 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
-  <!-- NAV -->
+  <!-- NAV: floating frosted pill -->
   <header class="nav">
-    <a href="#top" class="logo" id="nav-logo">&lt;YN/&gt;</a>
-    <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">☰</button>
-    <nav id="nav-links">
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#skills">Skills</a>
-      <a href="#experience">Experience</a>
-      <a href="#contact">Contact</a>    </nav>
+    <div class="nav-pill">
+      <a href="#top" class="logo" aria-label="Back to top">
+        <svg class="logo-sprite" viewBox="0 0 11 8" shape-rendering="crispEdges" aria-hidden="true">
+          <path fill="currentColor" d="M2 0h1v1H2zM8 0h1v1H8zM3 1h5v1H3zM2 2h7v1H2zM1 3h2v1H1zM4 3h3v1H4zM8 3h2v1H8zM0 4h11v1H0zM0 5h1v1H0zM2 5h7v1H2zM10 5h1v1h-1zM0 6h1v1H0zM2 6h1v1H2zM8 6h1v1H8zM10 6h1v1h-1zM3 7h2v1H3zM6 7h2v1H6z"/>
+        </svg>
+        <span id="nav-logo">YN</span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" id="nav-toggle">☰</button>
+      <nav id="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact" class="btn btn-outline btn-small">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <!-- HERO with playable canvas -->
+  <!-- HERO: playable night-sky scene with a frosted overlay card -->
   <section class="hero" id="top">
-    <canvas id="hero-canvas" aria-label="Interactive starfield mini-game"></canvas>
-    <div class="hero-content">
-      <p class="pixel tag">PLAYER 1 READY</p>
+    <canvas id="hero-canvas" aria-label="Interactive night-sky mini-game"></canvas>
+    <p class="hud mono" aria-live="polite"><span id="score">SCORE 0</span></p>
+    <div class="hero-card">
+      <p class="tag mono">PLAYER 1 READY</p>
       <h1 id="hero-name">Your Name</h1>
       <p class="hero-role" id="hero-role">CS Student · Game Programmer</p>
       <p class="hero-tagline" id="hero-tagline"></p>
       <div class="hero-cta">
-        <a href="#projects" class="btn">View Projects</a>
-        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="#projects" class="btn btn-primary">View Projects <span class="arrow">→</span></a>
+        <a href="#contact" class="btn btn-outline-light">Get in Touch</a>
       </div>
-      <p class="hint mono">Move your mouse to steer · click to fire · <span id="score">SCORE 0</span></p>
+      <p class="hint mono">Move your mouse to steer · click to fire</p>
     </div>
   </section>
 
   <main>
-    <!-- ABOUT -->
+    <!-- ABOUT: 6 + 6 split -->
     <section id="about" class="section">
-      <h2 class="section-title"><span class="pixel">01</span> About Me</h2>
-      <div class="about-grid">
-        <div class="about-text" id="about-text"></div>
-        <ul class="stats" id="about-stats"></ul>
+      <div class="split">
+        <div>
+          <header class="section-head">
+            <p class="eyebrow mono">01 — About</p>
+            <h2 class="section-title">About Me</h2>
+          </header>
+          <div class="about-text" id="about-text"></div>
+        </div>
+        <div class="about-figures">
+          <figure class="diagram-card">
+            <div class="portrait" id="about-photo"></div>
+            <figcaption class="mono">fig. 1 — player one</figcaption>
+          </figure>
+          <figure class="diagram-card">
+            <ul class="stats" id="about-stats"></ul>
+            <figcaption class="mono">fig. 2 — player stats</figcaption>
+          </figure>
+        </div>
       </div>
     </section>
 
     <!-- PROJECTS -->
     <section id="projects" class="section">
-      <h2 class="section-title"><span class="pixel">02</span> Projects</h2>
+      <header class="section-head section-head-row">
+        <div>
+          <p class="eyebrow mono">02 — Projects</p>
+          <h2 class="section-title">Things I've Built</h2>
+          <p class="section-sub">Games, engines and tools — switch between game dev and IT work.</p>
+        </div>
+        <a class="btn btn-outline" id="track-resume" href="#" target="_blank" rel="noopener">Download Resume ↓</a>
+      </header>
       <div class="track-bar">
         <div class="track-switch" id="track-switch" role="tablist" aria-label="Project type"></div>
-        <a class="btn btn-small btn-ghost" id="track-resume" href="#" target="_blank" rel="noopener">Download Resume ↓</a>
       </div>
       <div class="filters" id="filters"></div>
       <div class="project-grid" id="project-grid"></div>
-      <p class="project-empty mono" id="project-empty" hidden>No projects here yet — check back soon.</p>
+      <p class="project-empty" id="project-empty" hidden>No projects here yet — check back soon.</p>
     </section>
 
     <!-- SKILLS -->
     <section id="skills" class="section">
-      <h2 class="section-title"><span class="pixel">03</span> Skills</h2>
+      <header class="section-head">
+        <p class="eyebrow mono">03 — Skills</p>
+        <h2 class="section-title">What I Work With</h2>
+        <p class="section-sub">The languages, engines and tools I use day to day.</p>
+      </header>
       <div class="skills-grid" id="skills-grid"></div>
     </section>
 
-    <!-- EXPERIENCE / EDUCATION -->
+    <!-- EXPERIENCE / EDUCATION: heading left, timeline right -->
     <section id="experience" class="section">
-      <h2 class="section-title"><span class="pixel">04</span> Experience &amp; Education</h2>
-      <ol class="timeline" id="timeline"></ol>
+      <div class="split split-sticky">
+        <header class="section-head">
+          <p class="eyebrow mono">04 — Experience</p>
+          <h2 class="section-title">Experience &amp; Education</h2>
+          <p class="section-sub">Where I've studied, led and shipped.</p>
+        </header>
+        <ol class="timeline" id="timeline"></ol>
+      </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="section contact">
-      <h2 class="section-title"><span class="pixel">05</span> Contact</h2>
-      <p class="contact-blurb" id="contact-blurb"></p>
-      <a class="btn btn-big" id="contact-email" href="#">Say Hello</a>
-      <ul class="socials" id="socials"></ul>
+    <!-- CONTACT: the one vivid blue surface -->
+    <section id="contact" class="section">
+      <div class="atmos-card">
+        <p class="eyebrow mono">05 — Contact</p>
+        <h2 class="section-title">Let's build something.</h2>
+        <p class="section-sub" id="contact-blurb"></p>
+        <div class="email-copy">
+          <span class="email-address" id="contact-email"></span>
+          <button class="btn btn-dark" id="copy-email" type="button">Copy</button>
+        </div>
+        <ul class="socials" id="socials"></ul>
+      </div>
     </section>
   </main>
 
-  <footer class="footer mono">
-    <p>© <span id="year"></span> <span id="footer-name"></span> · Built with HTML, CSS &amp; vanilla JS · Hosted on
-      GitHub Pages</p>
+  <!-- FOOTER: colophon -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-statement">Thanks for playing.</p>
+      <div class="footer-row">
+        <p>© <span id="year"></span> <span id="footer-name"></span></p>
+        <nav class="footer-links">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+          <a href="#top">Back to top ↑</a>
+        </nav>
+      </div>
+    </div>
   </footer>
 
   <!-- Project detail modal -->
