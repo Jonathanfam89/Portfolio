@@ -219,8 +219,9 @@ const PORTFOLIO = {
   contactBlurb:
     "I'm currently looking for a game programming internship. If you're hiring or just want to talk games — my inbox is open.",
 
-  /* label shows on hover; icon is the text/emoji shown */
+  /* label is the button text and picks its icon (SOCIAL_ICONS in main.js) */
   socials: [
-    { label: "GitHub", url: "https://github.com/jonathanfam89", icon: "GitHub" },
-    { label: "LinkedIn", url: "https://linkedin.com/in/jonathan-fam", icon: "LinkedIn" },  ],
+    { label: "GitHub", url: "https://github.com/jonathanfam89" },
+    { label: "LinkedIn", url: "https://linkedin.com/in/jonathan-fam" },
+  ],
 };
