@@ -80,6 +80,10 @@ a {
   text-decoration: none;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 img {
   max-width: 100%;
   display: block;
@@ -608,6 +612,51 @@ img {
 .project-empty {
   padding: 48px 0;
   color: var(--color-ash);
+}
+
+/* "Work in progress" track: a dashed under-construction card */
+.project-empty.wip-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 72px 24px;
+  text-align: center;
+  background-color: var(--color-paper);
+  background-image:
+    linear-gradient(var(--color-linen) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-linen) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border: 1px dashed var(--color-fog);
+  border-radius: var(--radius-cards);
+}
+
+.project-empty.wip-panel[hidden] {
+  display: none;
+}
+
+.wip-panel strong {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: var(--tracking-display);
+  color: var(--color-graphite);
+}
+
+.wip-badge {
+  padding: 2px 8px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-signal-blue);
+  border: 1px solid var(--color-signal-blue);
+  border-radius: var(--radius-sm);
+  animation: blink 1.4s steps(2) infinite;
+}
+
+.track-switch .count.wip {
+  color: var(--color-signal-blue);
+  border-color: var(--color-signal-blue);
 }
 
 .filters {

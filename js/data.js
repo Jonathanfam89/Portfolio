@@ -6,10 +6,12 @@ const PORTFOLIO = {
   tagline:
     "I build gameplay systems, tools, and engines",
   /* Project tracks: visitors switch between these above the projects.
-     Each has its own resume — drop the PDFs in /assets with these names. */
+     Each has its own resume — drop the PDFs in /assets with these names.
+     wip: true shows a "work in progress" panel instead of that track's projects
+     (and hides its resume button). Set it to false when the track is ready. */
   tracks: {
     game: { label: "Game Dev", resume: "assets/resume-game.pdf" },
-    it: { label: "IT", resume: "assets/resume-it.pdf" },
+    it: { label: "IT", resume: "assets/resume-it.pdf", wip: true },
   },
   /* Your photo for "fig. 1" in the About section, e.g. "assets/me.jpg".
      Leave "" to show the placeholder. A square-ish or 4:3 photo works best. */

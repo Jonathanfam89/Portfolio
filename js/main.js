@@ -105,14 +105,24 @@
   const trackIds = Object.keys(D.tracks);
   let track = trackIds[0], tag = "All";
 
+  const emptyEl = $("#project-empty");
+  const emptyText = emptyEl.innerHTML;
+
   const applyFilters = () => {
+    const wip = D.tracks[track].wip;
     let shown = 0;
     grid.querySelectorAll(".card").forEach((c) => {
-      const hide = c.dataset.track !== track || (tag !== "All" && !c.dataset.tags.split("|").includes(tag));
+      const hide = wip || c.dataset.track !== track || (tag !== "All" && !c.dataset.tags.split("|").includes(tag));
       c.classList.toggle("hidden", hide);
       if (!hide) shown++;
     });
-    $("#project-empty").hidden = shown > 0;
+    emptyEl.classList.toggle("wip-panel", !!wip);
+    emptyEl.innerHTML = wip
+      ? `<span class="wip-badge mono">WORK IN PROGRESS</span>
+         <strong>${esc(D.tracks[track].label)} projects are loading…</strong>
+         <span>I'm putting this section together — check back soon.</span>`
+      : emptyText;
+    emptyEl.hidden = shown > 0;
   };
 
   const setTrack = (id) => {
@@ -120,9 +130,11 @@
     track = id; tag = "All";
     const t = D.tracks[id];
     trackSwitch.querySelectorAll("button").forEach((b) => b.setAttribute("aria-selected", b.dataset.track === id));
+    $("#track-resume").hidden = !!t.wip;
     $("#track-resume").href = t.resume;
     $("#track-resume").textContent = `Download ${t.label} Resume ↓`;
     const tags = ["All", ...new Set(D.projects.filter((p) => p.track === id).flatMap((p) => p.tags).filter(Boolean))];
+    filters.hidden = !!t.wip;
     filters.innerHTML = tags.map((t, i) => `<button class="filter${i ? "" : " active"}" data-tag="${esc(t)}">${esc(t)}</button>`).join("");
     applyFilters();
     try { localStorage.setItem("track", id); } catch {}
@@ -131,7 +143,8 @@
   trackSwitch.innerHTML = trackIds
     .map((id) => {
       const n = D.projects.filter((p) => p.track === id).length;
-      return `<button role="tab" data-track="${id}">${esc(D.tracks[id].label)} <span class="count">${n}</span></button>`;
+      const badge = D.tracks[id].wip ? `<span class="count wip">WIP</span>` : `<span class="count">${n}</span>`;
+      return `<button role="tab" data-track="${id}">${esc(D.tracks[id].label)} ${badge}</button>`;
     })
     .join("");
   trackSwitch.addEventListener("click", (e) => {
