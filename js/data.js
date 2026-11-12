@@ -5,16 +5,10 @@ const PORTFOLIO = {
   role: "CS Student · Game Programmer/Designer",
   tagline:
     "I build gameplay systems, tools, and engines",
-  /* Project tracks: visitors switch between these above the projects.
-     Each has its own resume — drop the PDFs in /assets with these names.
-     wip: true shows a "work in progress" panel instead of that track's projects
-     (and hides its resume button). Set it to false when the track is ready. */
   tracks: {
     game: { label: "Game Dev", resume: "assets/resume-game.pdf" },
     it: { label: "IT", resume: "assets/resume-it.pdf", wip: true },
   },
-  /* Your photo for "fig. 1" in the About section, e.g. "assets/me.jpg".
-     Leave "" to show the placeholder. A square-ish or 4:3 photo works best. */
   photo: "assets/Portrait.jpg",
   email: "Jonathanfam89@gmail.com",
   lookingFor: "Seeking a Game Programming Internship — Summer 2027",
@@ -31,32 +25,22 @@ const PORTFOLIO = {
     { value: "C++", label: "Main language" }
   ],
 
-  /* ---------- PROJECTS ----------
-     track: "game" or "it" — which tab the project appears under.
-     status: "completed" or "ongoing" (leave "" to hide it).
-     tags: used for filter buttons.
-     image: optional still, e.g. "assets/echo-drift.png" (shown by default).
-     gif:   optional gameplay GIF, e.g. "assets/echo-drift.gif" (plays on hover).
-     media: extra pics/videos for the pop-up carousel, e.g.
-            ["assets/trailer.mp4", "https://youtu.be/VIDEO_ID", "assets/shot2.png"].
-            Videos always come first; image and gif are added automatically.
-     If no image is set, a generated cover is shown instead.            */
+ //---------- PROJECTS ----------
   projects: [
     {
-      title: "Out of Time ",
+      title: "Out of Time",
       track: "game",
       icon: "🚀",
       summary: "Momentum-based 2D space shooter with a custom physics step and wave-based enemy AI.",
       description:
-        "Solo project built in Unity. I wrote a fixed-timestep physics layer for tight, deterministic movement, a data-driven wave spawner using ScriptableObjects, and enemy behaviours driven by a simple utility-AI system. Object pooling keeps allocations at zero during gameplay.",
+        "Leading a team of 7 to do a unity game with custom tools",
       highlights: [
-        "Fixed-timestep movement with interpolation for smooth rendering",
-        "Utility AI: enemies weigh flee / chase / flank each frame",
-        "Object pooling → 0 GC allocations in the gameplay loop",
+
+        "Tools done for now is Spline tool, and a 2d grid level design",
       ],
-      tech: ["Unity", "C#", "ScriptableObjects"],
+      tech: ["Unity", "C#", "Level Design "],
       tags: ["Unity", "Gameplay", "AI"],
-      role: "Solo developer",
+      role: "Tech Lead",
       status: "ongoing",
       image: "",
       gif: "",
@@ -91,9 +75,8 @@ const PORTFOLIO = {
       description:
         "Made with a team of 6 to create game with A game engine given by the SIT/Digipen. i was a programmer who built the OOP enemies and worked on the gamelay elements helping others along the way",
       highlights: [
-        "Endless Waves of Enemies  : coyote time, jump buffer, variable jump",
-        "Custom shader to reveal geometry within light radius",
-        "Placed top 10% in 'Innovation' category",
+        "Endless Waves of Enemies",
+        "Randomness from the different enemies popping out"
       ],
       tech: ["C++"],
       tags: [ "Gameplay","OOP",""],
@@ -107,13 +90,11 @@ const PORTFOLIO = {
       title: "CatNapped",
       track: "game",
       icon: "",
-      summary: "",
+      summary: "It is a 2d adventure game where you are trying to rescue your pet cat that was catnapped by a rival game",
       description:
-        "A roguelike prototype in Unreal Engine 5. Rooms are generated with binary space partitioning, corridors are connected with a minimum spanning tree, and enemies navigate using a grid-based A* that I implemented in C++ rather than the built-in NavMesh to learn the algorithm.",
+        "done with a C game engine provided by the school, its was a physics based game where you are able to swing and pull boxes and shoot enemies as you go  ",
       highlights: [
-        "BSP + MST level generation, seedable for reproducibility",
-        "Custom A* pathfinding in C++ with a binary heap",
-        "Blueprint-exposed parameters so designers can tune generation",
+        "the physics of the rope mechanics from the pulling of boxes and pushing of boxes and the rope swinging mechanics "
       ],
       tech: ["C++", "Physics","Gameplay"],
       tags: ["Physics", "C++"],
@@ -125,7 +106,7 @@ const PORTFOLIO = {
     },
     /* ----- IT projects (examples — replace with your own) ----- */
     {
-      title: "Example IT Project",
+      title: "Optimizing Running Time",
       track: "it",
       icon: "🖥️",
       summary: "Replace this with an IT project — e.g. a web app, network setup, or automation script.",
