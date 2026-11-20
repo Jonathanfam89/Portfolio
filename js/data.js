@@ -17,6 +17,7 @@ const PORTFOLIO = {
     "I'm a undergraduate at <strong>Singapore institute of Technology & Digipen </strong> currently studying in their joint degree program in Computer Science in Real-Time Interactive Simulation",
     "Been in love with games all my life since i was 7, since then i have been dreaming of making a successful game franchise.",
     "Outside of code you'll find me playing Riftbound IRL, Grinding Ranks in Deadlock, Might find me Slaying Dragons in D&D by night.",
+    "Just past facts, I was given leadership roles of <strong>General Secretary </strong> for Student Council during my time in ITE College East, and given the role of <strong>HR/Relations</strong> in School of Computing Club during my time in Singapore Polytechnic"
   ],
 
   stats: [
@@ -37,6 +38,7 @@ const PORTFOLIO = {
       highlights: [
 
         "Tools done for now is Spline tool, and a 2d grid level design",
+         "Contributed code about 2000 lines of code, help my Game Designer with custom unity tools to improve time efficiency and streamline game production by about 70% ",
       ],
       tech: ["Unity", "C#", "Level Design "],
       tags: ["Unity", "Gameplay", "AI"],
@@ -57,7 +59,7 @@ const PORTFOLIO = {
         "Archetype component with factory and blueprint concept with friendly component storage",
         "Script-able with C++ and C#",
         "Replay system with VS ghost elements",
-        "ImGui editor",
+        "Contributed more than 3000 lines of code from Game Engine Architecture, Scripting and Replay System.",
       ],
       tech: ["C++", "C#", "OpenGL", "ImGui", "CMake","Mono",],
       tags: ["C++", "Engine", "Graphics"],
@@ -65,7 +67,7 @@ const PORTFOLIO = {
       status: "completed",
       image: "assets/MBTW_Pic.png",
       gif: "",
-      media: [],
+      media: ["assets/Gam200.mp4"],
     },
     {
       title: "Kroak'N Load",
@@ -76,7 +78,8 @@ const PORTFOLIO = {
         "Made with a team of 6 to create game with A game engine given by the SIT/Digipen. i was a programmer who built the OOP enemies and worked on the gamelay elements helping others along the way",
       highlights: [
         "Endless Waves of Enemies",
-        "Randomness from the different enemies popping out"
+        "Randomness from the different enemies popping out",
+        "about 200 lines of code for the AI enemies and its movements  "
       ],
       tech: ["C++"],
       tags: [ "Gameplay","OOP",""],
@@ -94,7 +97,8 @@ const PORTFOLIO = {
       description:
         "done with a C game engine provided by the school, its was a physics based game where you are able to swing and pull boxes and shoot enemies as you go  ",
       highlights: [
-        "the physics of the rope mechanics from the pulling of boxes and pushing of boxes and the rope swinging mechanics "
+        "the physics of the rope mechanics from the pulling of boxes and pushing of boxes and the rope swinging mechanics. ",
+        "done about 500 lines of code the physics and box movements."
       ],
       tech: ["C++", "Physics","Gameplay"],
       tags: ["Physics", "C++"],
@@ -189,7 +193,7 @@ const PORTFOLIO = {
       when: "Apr 2019 — March 2022",
       title: "Diploma In Information Technology Student",
       org: "Singapore Polytechinc ",
-      details: "General IT full stack development with HTML, CSS, javascript and Went into specialization for immersive technology where i did AR and VR game develop projects with business mod of human resources, enterprise innovation and finance   ",
+      details: "General IT full stack development with HTML, CSS, javascript and Went into specialization for immersive technology where i did AR and VR game develop projects with business modules of human resources, enterprise innovation and finance   ",
     },
     {
       when: "Jan 2017 - May 2019",
