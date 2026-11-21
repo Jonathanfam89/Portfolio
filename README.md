@@ -1,72 +1,71 @@
-# 🎮 Game Programmer Portfolio
+Jonathan Fam — Gameplay, Engine & Tools Programmer
 
-A fast, dependency-free portfolio site for a Computer Science student applying for **game programming internships**. Pure HTML, CSS and vanilla JavaScript — no build step — so it deploys to GitHub Pages as-is.
+Computer Science (Real-Time Interactive Simulation) student at the Singapore Institute of Technology, looking for a game programming internship. I build engines, tools and gameplay systems in C++, C# and Unity.
 
-**Live site:** `https://<your-username>.github.io/`
+▶ Live site: https://<your-username>.github.io/ · Resume (PDF, no login): assets/resume-game.pdf · Email: jonathanfam89@gmail.com · LinkedIn
 
-## Features
+I led an 8-person team building a C++ 2D engine with hot-reloadable C# scripting and input replay for bug reproduction. I shipped two C/C++ games held at 60 FPS. I built Unity editor and procedural tools that cut designers' content-creation time by 70%.
 
-- **Playable hero** — a tiny canvas starfield shooter (steer with the mouse, click to fire). Shows off the fact that you write game code, right on the landing page.
-- **Project cards with filters** — filter by engine/skill (Unity, C++, AI, Graphics…) and click any card for a detail view with your role, duration and key technical highlights.
-- **Skills, timeline and contact** sections.
-- **Single data file** — every piece of text lives in `js/data.js`.
-- Responsive, keyboard accessible, respects `prefers-reduced-motion`, and pauses the game loop when off-screen.
+Case studies
 
-## Project structure
+Three projects, each showing something different. Every one follows the same format: problem → constraint → what I tested → what failed → what I changed → result.
 
-```
-.
-├── index.html        # page layout (rarely needs editing)
-├── css/style.css     # all styling — tweak colours in :root
-├── js/data.js        # ← YOUR CONTENT GOES HERE
-├── js/main.js        # rendering + hero mini-game
-├── assets/           # resume PDF, project GIFs/screenshots
-└── .nojekyll         # tells GitHub Pages to serve files as-is
-```
+	Project	What it proves	Type	Run it
+⭐ Flagship	Custom 2D Game Engine	Engine architecture, team leadership	Engine (not a game)	Repo · Demo build
+⏱ Constrained	Original C/C++ Games	Performance  · Repo
+🛠 Skill proof	Unity Procedural & Editor Tools	Tools programming for designers	Tooling	Repo · WebGL demo
+1. Flagship — Custom 2D Game Engine (C++)
 
-## Customise it
+Tech Lead, team of 8 · C++, C# · Game Engine Architecture module · [duration]
 
-1. Open **`js/data.js`** and replace the placeholder name, bio, projects, skills, timeline and links with your own. The sample projects are examples — delete or rewrite them.
-2. Put your resumes in `assets/resume-game.pdf` and `assets/resume-it.pdf`.
-3. Add gameplay GIFs or screenshots to `assets/` and set each project's `image` field, e.g. `image: "assets/echo-drift.gif"`. Recruiters love a 5–10 second gameplay GIF.
-4. (Optional) Change the colour scheme by editing the variables at the top of `css/style.css`.
+Problem: Every change to gameplay logic meant recompiling the engine, and bugs testers reported often couldn't be reproduced.
+Constraint: Eight people working in one codebase, a fixed semester deadline, and no third-party engine allowed.
+What I tested: C++/C# scripting so gameplay code runs without an engine rebuild. Input recording and playback so a reported bug can be replayed exactly. [Add the alternatives you compared, e.g. Lua vs. embedded Mono, or recording inputs vs. full state snapshots.]
+What failed: [Be specific, e.g. replays drifted out of sync because of variable timestep or unseeded randomness; scripts crashed on reload because they held pointers into engine memory.]
+What I changed: [e.g. moved to a fixed timestep and seeded RNG; added a handle system between C# and C++ objects.]
+Result: Gameplay changes no longer need an engine recompile (iteration time cut by [X]%). The team can reproduce [X]% of reported bugs on demand. I wrote ~3,000 lines across scripting, replay and core systems.
 
-Preview locally by opening `index.html` in a browser, or run a small server:
+📁 Code to read first: [path/to/ScriptingBridge.cpp], [path/to/InputReplay.cpp]
 
-```bash
-python -m http.server 8000
-# then visit http://localhost:8000
-```
+2. Constrained — Original C/C++ Games at 60 FPS
 
-## Deploy to GitHub Pages
+Programmer · C/C++ · 2 games shipped from concept to release · [duration]
 
-**Option A — personal site (`username.github.io`)**
+Problem: [Game name] needed [X] entities on screen with enemy AI and physics running every frame.
+Constraint: A steady 60 FPS (16.6 ms per frame) on [target hardware], written in plain C/C++ without an engine.
+What I tested: [e.g. profiled the frame and found collision checks were the cost; tried a uniform grid against a quadtree.]
+What failed: [e.g. brute-force O(n²) collision dropped to [X] FPS at [X] entities; the quadtree's rebuild cost outweighed its gains for fast-moving entities.]
+What I changed: [e.g. switched to a uniform spatial grid and kept AI updates in a separate pass.]
+Result: Holds a steady 60 FPS with [X] entities on screen (frame time down from [X] ms to [X] ms). I wrote ~800 lines of enemy AI and physics.
 
-1. Create a new public repo named exactly `<your-username>.github.io`.
-2. Upload these files to the root of the repo (drag-and-drop on GitHub works, or use git below).
-3. Go to **Settings → Pages**, set *Source* to **Deploy from a branch**, branch **main**, folder **/ (root)**.
-4. Your site will be live at `https://<your-username>.github.io/` within a minute or two.
+🎮 Playable in the browser: [link to itch.io or a WebGL/Emscripten build]
 
-**Option B — project repo (any name, e.g. `portfolio`)**
+3. Skill proof — Unity Procedural & Editor Tools
 
-Same steps; the site will be at `https://<your-username>.github.io/portfolio/`.
+Tech Lead, team of [X] · Unity, C# · current project
 
-```bash
-git init
-git add .
-git commit -m "Initial portfolio"
-git branch -M main
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git push -u origin main
-```
+Problem: Designers were building 3D levels and placing [X]+ props per level by hand, which was the team's biggest bottleneck.
+Constraint: The tools had to work inside the Unity Editor for non-programmers, and their output had to stay hand-editable after generation.
+What I tested: A procedural level-generation system, and a spline tool that places decorations along paths. I sat with the designers to see where their time went. [Add which approaches you prototyped.]
+What failed: [e.g. the first generator was fully random, so designers threw away most of its output; props clipped into geometry on tight curves.]
+What I changed: [e.g. added designer-set seeds and constraints; added collision-aware spacing along the spline.]
+Result: Designers' content-creation time cut by 70%. Manual level-building time cut by [X]%. Hand placement of [X]+ props per level replaced.
 
-## Tips for game programming internship portfolios
 
-- Lead with your **2–3 strongest projects**; quality beats quantity.
-- For each project say **what *you* built** (systems, algorithms, optimisations) — especially on team projects.
-- Link to **source code** and a **playable build** (itch.io WebGL builds are perfect) wherever possible.
-- Mention numbers: frame times, sprite counts, speed-ups, jam placements.
+Other experience
 
-## License
+Junior Software Engineer, Cxrus Solutions. Angular front-ends and AWS Lambda/EC2 back-ends for enterprise web apps (B2B and B2C). This is client code, so it isn't public; details are on the resume.
 
-MIT — feel free to use and modify.
+Skills: C, C++, C# · OpenGL, Vulkan · Unity, Unreal Engine · Engine architecture · Angular, TypeScript, AWS
+
+About this repo
+
+This repo is the portfolio website itself: plain HTML, CSS and JavaScript, with no build step, hosted on GitHub Pages.
+
+index.html       page layout
+css/style.css    styling (colours in :root)
+js/data.js       all content: the three case studies, skills, links
+js/main.js       rendering + the playable starfield shooter in the hero
+assets/          resume PDFs, GIFs, screenshots
+
+To the portfolio webpage you can go to https://jonathanfam89.github.io/Portfolio/
