@@ -2,7 +2,7 @@ Jonathan Fam — Gameplay, Engine & Tools Programmer
 
 Computer Science (Real-Time Interactive Simulation) student at the Singapore Institute of Technology, looking for a game programming internship. I build engines, tools and gameplay systems in C++, C# and Unity.
 
-▶ Live site: https://<your-username>.github.io/ · Resume (PDF, no login): assets/resume-game.pdf · Email: jonathanfam89@gmail.com · LinkedIn
+▶ Live site: https://jonathanfam89.github.io/Portfolio/ : assets/resume-game.pdf · Email: jonathanfam89@gmail.com · LinkedIn
 
 I led an 8-person team building a C++ 2D engine with hot-reloadable C# scripting and input replay for bug reproduction. I shipped two C/C++ games held at 60 FPS. I built Unity editor and procedural tools that cut designers' content-creation time by 70%.
 
@@ -10,9 +10,9 @@ Case studies
 
 Three projects, each showing something different. Every one follows the same format: problem → constraint → what I tested → what failed → what I changed → result.
 
-	Project	What it proves	Type	Run it
-⭐ Flagship	Custom 2D Game Engine	Engine architecture, team leadership	Engine (not a game)	Repo · Demo build
-⏱ Constrained	Original C/C++ Games	Performance  · Repo
+
+⭐ Flagship	Custom 2D Game Engine	Engine architecture, team leadership	Engine and game Repo · Demo build
+⏱ Constrained	Original C/C++ Game Performance  · Repo
 🛠 Skill proof	Unity Procedural & Editor Tools	Tools programming for designers	Tooling	Repo · WebGL demo
 1. Flagship — Custom 2D Game Engine (C++)
 
