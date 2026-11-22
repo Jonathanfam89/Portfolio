@@ -1,33 +1,34 @@
 Jonathan Fam — Gameplay, Engine & Tools Programmer
 
-Computer Science (Real-Time Interactive Simulation) student at the Singapore Institute of Technology, looking for a game programming internship. I build engines, tools and gameplay systems in C++, C# and Unity.
+Computer Science Real-Time Interactive Simulation student at the Singapore Institute of Technology, looking for a game programming internship. I build engines, tools and gameplay systems in C++, C# and Unity.
 
-▶ Live site: https://jonathanfam89.github.io/Portfolio/ : assets/resume-game.pdf · Email: jonathanfam89@gmail.com · LinkedIn
+▶ Live site: https://jonathanfam89.github.io/Portfolio/ Email: jonathanfam89@gmail.com · LinkedIn www.linkedin.com/in/jonathan-fam
 
 I led an 8-person team building a C++ 2D engine with hot-reloadable C# scripting and input replay for bug reproduction. I shipped two C/C++ games held at 60 FPS. I built Unity editor and procedural tools that cut designers' content-creation time by 70%.
 
 Case studies
-
-Three projects, each showing something different. Every one follows the same format: problem → constraint → what I tested → what failed → what I changed → result.
-
-
-⭐ Flagship	Custom 2D Game Engine	Engine architecture, team leadership	Engine and game Repo · Demo build
+⭐ Flagship	Custom 2D Game Engine	Engine architecture, team leadership Engine and game Repo · Demo build
 ⏱ Constrained	Original C/C++ Game Performance  · Repo
-🛠 Skill proof	Unity Procedural & Editor Tools	Tools programming for designers	Tooling	Repo · WebGL demo
+🛠 Skill proof	Unity Procedural & Editor Tools	Tools programming for designers	Tooling	Repo
 1. Flagship — Custom 2D Game Engine (C++)
 
-Tech Lead, team of 8 · C++, C# · Game Engine Architecture module · [duration]
+Tech Lead, team of 8 · C++, C# · Game Engine Architecture module · for about 6 months 
 
-Problem: Every change to gameplay logic meant recompiling the engine, and bugs testers reported often couldn't be reproduced.
-Constraint: Eight people working in one codebase, a fixed semester deadline, and no third-party engine allowed.
-What I tested: C++/C# scripting so gameplay code runs without an engine rebuild. Input recording and playback so a reported bug can be replayed exactly. [Add the alternatives you compared, e.g. Lua vs. embedded Mono, or recording inputs vs. full state snapshots.]
-What failed: [Be specific, e.g. replays drifted out of sync because of variable timestep or unseeded randomness; scripts crashed on reload because they held pointers into engine memory.]
-What I changed: [e.g. moved to a fixed timestep and seeded RNG; added a handle system between C# and C++ objects.]
+Problem: The problem for this was set in the base of the game engine architecture and 
+Constraint: Eight people working in one codebase, a fixed semester deadlines.
+What I tested/did: C++/C# scripting with mono so the gameplay can be coded in c#. Input recording and playback so a can be replayed and for the VS ghost system. Game Engine Architecture was done and tested by me
+What failed: For the scripting was finding the way to even convert from c# to c++, thinking which recording method would be good for the game like input-based, position based and so on. as for the architecture was which system (like ECS,OOP, or something else) would i use and good for the game.
+What I changed: 
+
+C++/C# scripting
+For the scripting wise i chose mono instead of .net for the scripting as would be simpler to implement and have added APIs to the game engine so just added a app domain and and creating internal call would be easier than .net's setup of hostfxr a library and get function pointers.
+
+Replay System
+
+
 Result: Gameplay changes no longer need an engine recompile (iteration time cut by [X]%). The team can reproduce [X]% of reported bugs on demand. I wrote ~3,000 lines across scripting, replay and core systems.
 
-📁 Code to read first: [path/to/ScriptingBridge.cpp], [path/to/InputReplay.cpp]
-
-2. Constrained — Original C/C++ Games at 60 FPS
+2. Constrained — Original C/C++ Games
 
 Programmer · C/C++ · 2 games shipped from concept to release · [duration]
 
@@ -37,8 +38,6 @@ What I tested: [e.g. profiled the frame and found collision checks were the cost
 What failed: [e.g. brute-force O(n²) collision dropped to [X] FPS at [X] entities; the quadtree's rebuild cost outweighed its gains for fast-moving entities.]
 What I changed: [e.g. switched to a uniform spatial grid and kept AI updates in a separate pass.]
 Result: Holds a steady 60 FPS with [X] entities on screen (frame time down from [X] ms to [X] ms). I wrote ~800 lines of enemy AI and physics.
-
-🎮 Playable in the browser: [link to itch.io or a WebGL/Emscripten build]
 
 3. Skill proof — Unity Procedural & Editor Tools
 
