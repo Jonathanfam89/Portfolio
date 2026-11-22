@@ -18,19 +18,20 @@ Problem: The problem for this was set in the base of the game engine architectur
 Constraint: Eight people working in one codebase, a fixed semester deadlines.
 What I tested/did: C++/C# scripting with mono so the gameplay can be coded in c#. Input recording and playback so a can be replayed and for the VS ghost system. Game Engine Architecture was done and tested by me
 What failed: For the scripting was finding the way to even convert from c# to c++, thinking which recording method would be good for the game like input-based, position based and so on. as for the architecture was which system (like ECS,OOP, or something else) would i use and good for the game.
-What I changed: 
 
+What I changed: 
 C++/C# scripting
-For the scripting wise i chose mono instead of .net for the scripting as would be simpler to implement and have added APIs to the game engine so just added a app domain and and creating internal call would be easier than .net's setup of hostfxr a library and get function pointers.
+For the scripting wise i chose mono instead of .net for the scripting as would be simpler to implement and have added APIs to the game engine so i added a app domain and and creating internal call would be easier than .net's setup of hostfxr a library and get function pointers.
 
 Replay System
+It was built choosing to just record they player's position and animation states for every frame and stored in json it was done as my game there was not a lot of moving obstacles, i created a VS ghost mode that is powered by said replay system where you can challenge the player with the best time so the ghost is a playback of the players best run or depending on what they chosen therefore a same path on the same timing in every run. Because the world is in the same state on every frame as it was during recording, the ghost's positions are always valid, and its movement stays consistent with the level.
 
-
-Result: Gameplay changes no longer need an engine recompile (iteration time cut by [X]%). The team can reproduce [X]% of reported bugs on demand. I wrote ~3,000 lines across scripting, replay and core systems.
+Game Engine Architecture 
+With 0 experience when creating the architecture, my team and i was discuss which system should we used for the game engine itself, it was either ECS or OOP programming i had to research and see which is suited for our engine, with ECS in the long run if my team and i want to create more game objects like in the thousands and maybe if we turn it to a 3d project and can be hard to setup with no experience and for OOP programming is just too much to handle and can be confusing at times, so i came up with another solution a 3rd option which is a normal component system where has a factory which produces the objects and entities and a blueprint to be sent to the factory to be produced, its simpler than ecs and not as confusing as OOP.
 
 2. Constrained — Original C/C++ Games
 
-Programmer · C/C++ · 2 games shipped from concept to release · [duration]
+Programmer · C/C++ · 2 games shipped from concept to release · 6 months
 
 Problem: [Game name] needed [X] entities on screen with enemy AI and physics running every frame.
 Constraint: A steady 60 FPS (16.6 ms per frame) on [target hardware], written in plain C/C++ without an engine.
@@ -55,7 +56,7 @@ Other experience
 
 Junior Software Engineer, Cxrus Solutions. Angular front-ends and AWS Lambda/EC2 back-ends for enterprise web apps (B2B and B2C). This is client code, so it isn't public; details are on the resume.
 
-Skills: C, C++, C# · OpenGL, Vulkan · Unity, Unreal Engine · Engine architecture · Angular, TypeScript, AWS
+Skills: C, C++, C# · OpenGL, Vulkan · Unity, Unreal Engine · Engine architecture
 
 About this repo
 
@@ -66,5 +67,3 @@ css/style.css    styling (colours in :root)
 js/data.js       all content: the three case studies, skills, links
 js/main.js       rendering + the playable starfield shooter in the hero
 assets/          resume PDFs, GIFs, screenshots
-
-To the portfolio webpage you can go to https://jonathanfam89.github.io/Portfolio/
