@@ -52,12 +52,6 @@ What I changed: [e.g. added designer-set seeds and constraints; added collision-
 Result: Designers' content-creation time cut by 70%. Manual level-building time cut by [X]%. Hand placement of [X]+ props per level replaced.
 
 
-Other experience
-
-Junior Software Engineer, Cxrus Solutions. Angular front-ends and AWS Lambda/EC2 back-ends for enterprise web apps (B2B and B2C). This is client code, so it isn't public; details are on the resume.
-
-Skills: C, C++, C# · OpenGL, Vulkan · Unity, Unreal Engine · Engine architecture
-
 About this repo
 
 This repo is the portfolio website itself: plain HTML, CSS and JavaScript, with no build step, hosted on GitHub Pages.
