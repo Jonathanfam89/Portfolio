@@ -54,7 +54,7 @@ const PORTFOLIO = {
       icon: "⚙️",
       summary: "A C++/OpenGL game engine with a component engine",
       description:
-        "Made a Game engine from scratch with c++, cmake and opengl.",
+        "Led an 8-person team building a 2D game engine from scratch in C++ (CMake, OpenGL), with C# scripting, a replay system and a component system.",
       highlights: [
         "Archetype component with factory and blueprint concept with friendly component storage",
         "Script-able with C++ and C#",
@@ -68,6 +68,44 @@ const PORTFOLIO = {
       image: "assets/MBTW_Pic.png",
       gif: "",
       media: ["assets/Gam200.mp4"],
+      /* Buttons under the case study. A link with an empty url is hidden. */
+      links: [
+        { label: "Repo", url: "" },
+        { label: "Demo build", url: "" },
+      ],
+      /* Case study: shown in the pop-up. Copy this block into any other project to give it one.
+         Every field is optional; leave one out and its row is skipped. */
+      caseStudy: {
+        badge: "⭐ Flagship",
+        context: "Tech Lead · Team of 8 · C++, C# · Game Engine Architecture module · ~6 months",
+        problem:
+          "Build a 2D game engine from scratch with no prior engine experience. The core architecture had to be chosen up front, gameplay had to be scriptable in C#, and the game needed a replay system to power a VS ghost mode.",
+        constraint: "Eight people working in one codebase, against fixed semester deadlines.",
+        tried:
+          "I built and tested three systems myself: C#/C++ scripting through Mono, so gameplay could be written in C#; recording and playback, so a run could be replayed and drive the VS ghost; and the engine's core architecture.",
+        failed: [
+          { title: "Scripting", text: "Working out how to bridge C# and C++ at all, so C# scripts could call into the engine." },
+          { title: "Replay", text: "Choosing a recording method that suited the game: input-based, position-based or something else." },
+          { title: "Architecture", text: "Choosing between ECS, OOP or something else, for an engine and a team with no engine experience." },
+        ],
+        changed: [
+          {
+            title: "C++/C# scripting",
+            text:
+              "I chose Mono over .NET because it was simpler to embed and to expose engine APIs to. With Mono I create an app domain and register internal calls for the engine's functions; .NET would have meant hosting the runtime through the hostfxr library and fetching function pointers by hand.",
+          },
+          {
+            title: "Replay system",
+            text:
+              "I record the player's position and animation state every frame and store the run as JSON, which was enough because the levels have few moving obstacles. The replay powers a VS ghost mode: you race a ghost of your best run (or a run you pick), and it follows the same path with the same timing every time. Because the world is in the same state on every frame as it was during recording, the ghost's positions are always valid and its movement stays consistent with the level.",
+          },
+          {
+            title: "Game engine architecture",
+            text:
+              "With no engine experience, the team debated ECS against OOP. My research showed ECS pays off at scale (thousands of objects, or a later move to 3D) but is hard to set up without experience, while a deep OOP hierarchy gets hard to manage and confusing. So I proposed a third option: a plain component system, where a factory builds entities and their components from blueprints. It's simpler than ECS and easier to follow than OOP.",
+          },
+        ],
+      },
     },
     {
       title: "Kroak'N Load",

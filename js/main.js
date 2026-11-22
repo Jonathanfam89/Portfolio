@@ -70,6 +70,7 @@
     .map(
       (p, i) => `
     <article class="card reveal" data-idx="${i}" data-track="${esc(p.track)}" data-tags="${esc(p.tags.join("|"))}" tabindex="0">
+      ${p.caseStudy?.badge ? `<span class="card-badge mono">${esc(p.caseStudy.badge)}</span>` : ""}
       ${coverHTML(p, i)}
       <div class="card-body">
         <h3>${esc(p.title)}</h3>
@@ -239,6 +240,36 @@
   });
   modal.addEventListener("close", () => stopMedia(modalBody));
 
+  /* Case study: Problem → Constraint → What I tried → What failed → What I changed */
+  const caseStudyHTML = (cs) => {
+    if (!cs) return "";
+    const row = (label, body) => (body ? `<div><dt>${label}</dt><dd>${body}</dd></div>` : "");
+    const titled = (items) => items.map((f) => `<li><strong>${esc(f.title)}:</strong> ${esc(f.text)}</li>`).join("");
+    return `
+      <section class="case-study">
+        <h4>Case study</h4>
+        ${cs.context ? `<p class="case-context mono">${esc(cs.context)}</p>` : ""}
+        <dl class="case-rows">
+          ${row("Problem", cs.problem && esc(cs.problem))}
+          ${row("Constraint", cs.constraint && esc(cs.constraint))}
+          ${row("What I tried", cs.tried && esc(cs.tried))}
+          ${row("What failed", cs.failed?.length && `<ul>${titled(cs.failed)}</ul>`)}
+        </dl>
+        ${cs.changed?.length ? `
+        <h4>What I changed</h4>
+        <div class="case-changes">
+          ${cs.changed.map((c) => `<article><h5>${esc(c.title)}</h5><p>${esc(c.text)}</p></article>`).join("")}
+        </div>` : ""}
+      </section>`;
+  };
+
+  const linksHTML = (links = []) => {
+    const live = links.filter((l) => l.url);
+    return live.length
+      ? `<div class="project-links">${live.map((l) => `<a class="btn btn-outline btn-small" href="${esc(l.url)}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join("")}</div>`
+      : "";
+  };
+
   const openProject = (i) => {
     const p = D.projects[i];
     modalBody.innerHTML = `
@@ -246,13 +277,16 @@
       <div class="modal-content">
         <h3>${esc(p.title)}</h3>
         <div class="meta">
+          ${p.caseStudy?.badge ? `<span>${esc(p.caseStudy.badge)}</span>` : ""}
           ${p.role ? `<span>👤 ${esc(p.role)}</span>` : ""}
           ${p.status ? `<span class="status status-${esc(p.status.toLowerCase())}">${p.status.toLowerCase() === "ongoing" ? "● Ongoing" : "✓ Completed"}</span>` : ""}
         </div>
         <p>${esc(p.description)}</p>
         ${p.highlights?.length ? `<h4>What I built</h4><ul>${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : ""}
+        ${caseStudyHTML(p.caseStudy)}
         <h4>Tech</h4>
         <div class="chips">${p.tech.map((t) => `<span class="chip">${esc(t)}</span>`).join("")}</div>
+        ${linksHTML(p.links)}
       </div>`;
     modal.showModal();
   };
